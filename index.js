@@ -2,6 +2,9 @@ var subscriber = require('./src/subscriber.js');
 var publisher = require('./src/publisher.js');
 var Locations = require('./src/Locations.js');
 var indexChecker = new Array();
+var takenCoordinatesRed = new Array();
+var availableCoordinatesRed = new Array();
+var stringTaken = "0";
 
 
 subscriber.start(); //starts the subscriber.js module
@@ -20,19 +23,50 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             }
         } else {
             var dentistData = Locations.extractDentistData(payload) // booking payload load length is about 70
-            var Takencoordinates = Locations.storeChosenOnes(dentistData)
-            console.log(Takencoordinates)
-            if (indexChecker.includes(Takencoordinates)) {
+            var takenDate = Locations.storeChosenOnes(dentistData)
+                //console.log(takenDate)
+            if (indexChecker.includes(takenDate)) {
+                var takenCoordinates = Locations.extractDnetistCoordinates(payload)
+                takenCoordinatesRed.push(takenCoordinates)
+                    //console.log(takenCoordinatesRed)
+                stringTaken = JSON.stringify(takenCoordinatesRed)
+
+                publisher.publish(stringTaken)
                 publisher.publish("Its already taken")
             } else {
-                indexChecker.push(Takencoordinates)
+                indexChecker.push(takenDate)
                 console.log(indexChecker)
                 publisher.publish("Confirmation")
-
             }
 
 
+            var allCoordinates = Locations.entireCoordinates();
+
+            var countKey = Object.keys(stringTaken).length; // how many elements in the array
+            console.log(countKey)
+            if (countKey == "1") {
+                var coordinatesInString = JSON.stringify(allCoordinates)
+                publisher.publish(coordinatesInString)
+            } else {
+
+                for (var i = 0; i < takenCoordinatesRed.length; i++) {
+                    var taken = takenCoordinatesRed[i]
+                    if (allCoordinates.includes(taken)) {
+                        allCoordinates.splice(i, 1)
+                            //console.log(allCoordinates)
+
+                        var coordinatesInString = JSON.stringify(allCoordinates)
+                        publisher.publish(coordinatesInString)
+                    }
+
+
+                }
+
+                //  publisher.publish(availableCoordinates)
+
+            }
         }
+
         //publisher.publish(Takencoordinates);
         //publisher.publish(OKcoordinates);
 
