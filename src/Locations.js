@@ -6,10 +6,7 @@ let jsonObject = {
             "dentists": 3,
             "address": "Spannmålsgatan 20",
             "city": "Gothenburg",
-            "coordinate": [
-                11.969388,
-                57.707619
-            ],
+            "coordinate": "11.969388,57.707619",
             "openinghours": {
                 "monday": "900-1700",
                 "tuesday": "800-1700",
@@ -25,10 +22,7 @@ let jsonObject = {
             "dentists": 1,
             "address": "Slottskogen",
             "city": "Gothenburg",
-            "coordinate": [
-                11.942625,
-                57.685255
-            ],
+            "coordinate": "11.942625,57.685255",
             "openinghours": {
                 "monday": "700-1900",
                 "tuesday": "700-1900",
@@ -44,10 +38,7 @@ let jsonObject = {
             "dentists": 2,
             "address": "Lindholmsallén 19",
             "city": "Gothenburg",
-            "coordinate": [
-                11.940386,
-                57.709872
-            ],
+            "coordinate": "11.940386,57.709872",
             "openinghours": {
                 "monday": "600-1530",
                 "tuesday": "800-1700",
@@ -63,10 +54,7 @@ let jsonObject = {
             "dentists": 3,
             "address": "Liseberg",
             "city": "Gothenburg",
-            "coordinate": [
-                11.991153,
-                57.694723
-            ],
+            "coordinate": "11.991153,57.694723",
             "openinghours": {
                 "monday": "1000-1800",
                 "tuesday": "1000-1800",
@@ -103,13 +91,28 @@ var Locations = {
         return hour + minute
     },
     extractDentistData(message) {
-        var parsed = JSON.parse(message)
+        var parsed = JSON.parse(message) // when client clicks book in the marker
             //console.log(parsed)
         var id = parsed.dentistID
         var date = parsed.clientTime
             // the booking button will result in a payload that includes the dentist ID 
             //console.log(id + date)
         return id + date
+    },
+
+    extractDnetistCoordinates(message) {
+        var parsed = JSON.parse(message) // when client clicks book in the marker
+        var coordinates = parsed.clientCoordinates
+        return coordinates;
+    },
+
+    entireCoordinates() {
+        var allCoordinates = new Array();
+        var countKey = Object.keys(jsonObject.dentists).length; // how many elements in the array
+        for (var m = 0; m < countKey; m++) {
+            allCoordinates[m] = jsonObject.dentists[m].coordinate // save all coordinates
+        }
+        return allCoordinates
     },
     validateTime(dayName, bookingTime) {
 
