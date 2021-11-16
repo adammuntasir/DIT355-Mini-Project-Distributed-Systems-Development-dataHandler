@@ -61,16 +61,8 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
 
 
                 }
-
-                //  publisher.publish(availableCoordinates)
-
             }
         }
-
-        //publisher.publish(Takencoordinates);
-        //publisher.publish(OKcoordinates);
-
-        publisher.publish(dayName)
 
     } catch (error) {
         console.log(error.message)
