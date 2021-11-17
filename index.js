@@ -46,7 +46,11 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             console.log(countKey)
             if (countKey == "1") {
                 var coordinatesInString = JSON.stringify(allCoordinates)
-                publisher.publish(coordinatesInString)
+                var withoutQuotes = coordinatesInString.replace(/"/g, '');
+                // console.log(withoutQuotes)
+
+                var wihtoutQuotesString = JSON.stringify(withoutQuotes)
+                publisher.publish(wihtoutQuotesString)
             } else {
 
                 for (var i = 0; i < takenCoordinatesRed.length; i++) {
@@ -56,14 +60,15 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                             //console.log(allCoordinates)
 
                         var coordinatesInString = JSON.stringify(allCoordinates)
-                        publisher.publish(coordinatesInString)
+                        var withoutQuotes = coordinatesInString.replace(/"/g, '');
+                        var wihtoutQuotesString = JSON.stringify(withoutQuotes)
+
+                        //console.log(coordinatesInString)
+                        publisher.publish(wihtoutQuotesString)
                     }
-
-
                 }
             }
         }
-
     } catch (error) {
         console.log(error.message)
     }
