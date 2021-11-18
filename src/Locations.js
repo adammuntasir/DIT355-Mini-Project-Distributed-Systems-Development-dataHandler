@@ -139,6 +139,7 @@ var Locations = {
             }
 
         }
+
         for (var m = 0; m < countKey; m++) {
             tuesdays[m] = jsonObject.dentists[m].openinghours.tuesday // save opeining hours
                 //console.log(tuesday)
@@ -183,7 +184,6 @@ var Locations = {
             return false
         }
     },
-    
     storeChosenOnes(data) {
         var checkThis = data
         return data
