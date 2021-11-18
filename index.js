@@ -19,7 +19,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             var booleanValue = Locations.validateTime(dayName, timeChosen)
 
             if (booleanValue != true) {
-                publisher.publish("no booking the time chosen is not valid by any dentist office"); // the visualize will give booking response of rejection
+                //     publisher.publish("no booking the time chosen is not valid by any dentist office"); // the visualize will give booking response of rejection
             }
         } else {
             var dentistData = Locations.extractDentistData(payload) // booking payload load length is about 70
@@ -31,12 +31,14 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                     //console.log(takenCoordinatesRed)
                 stringTaken = JSON.stringify(takenCoordinatesRed)
 
-                publisher.publish(stringTaken)
-                publisher.publish("Its already taken")
+                //   publisher.publish(stringTaken)
+                publisher.publish(JSON.stringify({ status: "Its already taken" }))
             } else {
                 indexChecker.push(takenDate)
                 console.log(indexChecker)
-                publisher.publish("Confirmation")
+                publisher.publish(JSON.stringify({
+                    status: "Confirmation"
+                }))
             }
 
 
@@ -69,6 +71,8 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                 }
             }
         }
+
+
     } catch (error) {
         console.log(error.message)
     }
