@@ -148,8 +148,8 @@ var Locations = {
             if ((parseInt(splitUpString[0]) < bookingTime) && (parseInt(splitUpString[1]) > bookingTime)) {
                 console.log("its valid time in one of the tuesdays at least") // this allows us to save the date and time in the next function array 
                 chance = 1
-
-                //return true
+                
+              //return true
             } else {
                 console.log("its not valid")
             }
