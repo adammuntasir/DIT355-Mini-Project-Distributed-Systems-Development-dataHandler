@@ -199,12 +199,12 @@ var Locations = {
     for (var m = 0; m < countKey; m++) {
         fridays[m] = jsonObject.dentists[m].openinghours.friday; // save opeining hours
          //console.log(friday)
-         var splitUpString = fridays[m].split("-");
-      console.log(bookingTime);
-      console.log(splitUpString[0]);
-      if (
-        parseInt(splitUpString[0]) < bookingTime &&
-        parseInt(splitUpString[1]) > bookingTime
+        var splitUpString = fridays[m].split("-");
+        console.log(bookingTime);
+        console.log(splitUpString[0]);
+        if (
+         parseInt(splitUpString[0]) < bookingTime &&
+         parseInt(splitUpString[1]) > bookingTime
       ) {
         console.log("its valid time in one of the fridays at least"); // this allows us to save the date and time in the next function array
         chance = 1;
