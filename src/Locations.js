@@ -198,6 +198,7 @@ var Locations = {
     }
     for (var m = 0; m < countKey; m++) {
         fridays[m] = jsonObject.dentists[m].openinghours.friday; // save opeining hours
+         //console.log(friday)
          var splitUpString = fridays[m].split("-");
       console.log(bookingTime);
       console.log(splitUpString[0]);
