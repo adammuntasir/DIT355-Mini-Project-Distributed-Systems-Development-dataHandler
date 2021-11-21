@@ -121,259 +121,130 @@ var Locations = {
         }
         return allCoordinates
     },
-    validateTime(dayName, bookingTime) {
 
-<<<<<<< HEAD
+    validateTime(dayName, bookingTime) {
         var countKey = Object.keys(jsonObject.dentists).length; // how many elements in the array
         let mondays = new Array(); // create an empty array
         let tuesdays = new Array();
         let wednesdays = new Array();
         let thursdays = new Array();
         let fridays = new Array();
-        var chance = 0
+        var chance = 0;
         for (var m = 0; m < countKey; m++) {
-            mondays[m] = jsonObject.dentists[m].openinghours.monday // save opeining hours
-                //console.log(mondays)
-            var splitUpString = mondays[m].split('-');
-            console.log(bookingTime)
-            console.log(splitUpString[0])
-            if ((parseInt(splitUpString[0]) < bookingTime) && (parseInt(splitUpString[1]) > bookingTime)) {
-                console.log("its valid time in one of the mondays at least") // this allows us to save the date and time in the next function array 
-                chance = 1
+            mondays[m] = jsonObject.dentists[m].openinghours.monday; // save opeining hours
+            //console.log(mondays)
+            var splitUpString = mondays[m].split("-");
+            console.log(bookingTime);
+            console.log(splitUpString[0]);
+            if (
+                parseInt(splitUpString[0]) < bookingTime &&
+                parseInt(splitUpString[1]) > bookingTime
+            ) {
+                console.log("its valid time in one of the mondays at least"); // this allows us to save the date and time in the next function array
+                chance = 1;
 
                 //return true
             } else {
-                console.log("its not valid")
+                console.log("its not valid");
             }
-
         }
 
         for (var m = 0; m < countKey; m++) {
-            tuesdays[m] = jsonObject.dentists[m].openinghours.tuesday // save opeining hours
-            var splitUpString = tuesdays[m].split('-');
-            console.log(bookingTime)
-            console.log(splitUpString[0])
-            if ((parseInt(splitUpString[0]) < bookingTime) && (parseInt(splitUpString[1]) > bookingTime)) {
-                console.log("its valid time in one of the tuesdays at least") // this allows us to save the date and time in the next function array 
-                chance = 1
+            tuesdays[m] = jsonObject.dentists[m].openinghours.tuesday; // save opeining hours
+            //console.log(tuesday)
+            var splitUpString = tuesdays[m].split("-");
+            console.log(bookingTime);
+            console.log(splitUpString[0]);
+            if (
+                parseInt(splitUpString[0]) < bookingTime &&
+                parseInt(splitUpString[1]) > bookingTime
+            ) {
+                console.log("its valid time in one of the tuesdays at least"); // this allows us to save the date and time in the next function array
+                chance = 1;
 
                 //return true
             } else {
-                console.log("its not valid")
+                console.log("its not valid");
             }
+        }
+        for (var m = 0; m < countKey; m++) {
+            wednesdays[m] = jsonObject.dentists[m].openinghours.wednesday; // save opeining hours
+            //console.log(wednesday)
+            var splitUpString = wednesdays[m].split("-");
+            console.log(bookingTime);
+            console.log(splitUpString[0]);
+            if (
+                parseInt(splitUpString[0]) < bookingTime &&
+                parseInt(splitUpString[1]) > bookingTime
+            ) {
+                console.log("its valid time in one of the wednesdays at least"); // this allows us to save the date and time in the next function array
+                chance = 1;
 
+                //return true
+            } else {
+                console.log("its not valid");
+            }
         }
         for (var m = 0; m < countKey; m++) {
-            wednesdays[m] = jsonObject.dentists[m].openinghours.wednesday // save opeining hours
-        }
-        for (var m = 0; m < countKey; m++) {
-            thursdays[m] = jsonObject.dentists[m].openinghours.thursday // save opeining hours
-        }
-        for (var m = 0; m < countKey; m++) {
-            fridays[m] = jsonObject.dentists[m].openinghours.friday // save opeining hours
-        }
-        if (dayName == "Monday") { // get the day from the extract data, or from data handler
-            console.log(mondays) // if monday is chosen by client we need to look at the items opening and closing hours for all mondays 
+            thursdays[m] = jsonObject.dentists[m].openinghours.thursday; // save opeining hours
+            //console.log(thursday)
+            var splitUpString = thursdays[m].split("-");
+            console.log(bookingTime);
+            console.log(splitUpString[0]);
+            if (
+                parseInt(splitUpString[0]) < bookingTime &&
+                parseInt(splitUpString[1]) > bookingTime
+            ) {
+                console.log("its valid time in one of the thursdays at least"); // this allows us to save the date and time in the next function array
+                chance = 1;
 
+                //return true
+            } else {
+                console.log("its not valid");
+            }
+        }
+        for (var m = 0; m < countKey; m++) {
+            fridays[m] = jsonObject.dentists[m].openinghours.friday; // save opeining hours
+            //console.log(friday)
+            var splitUpString = fridays[m].split("-");
+            console.log(bookingTime);
+            console.log(splitUpString[0]);
+            if (
+                parseInt(splitUpString[0]) < bookingTime &&
+                parseInt(splitUpString[1]) > bookingTime
+            ) {
+                console.log("its valid time in one of the fridays at least"); // this allows us to save the date and time in the next function array
+                chance = 1;
+
+                //return true
+            } else {
+                console.log("its not valid");
+            }
+        }
+        if (dayName == "Monday") {
+            // get the day from the extract data, or from data handler
+            console.log(mondays); // if monday is chosen by client we need to look at the items opening and closing hours for all mondays
         } else if (dayName == "Tuesday") {
-            console.log(tuesdays)
+            console.log(tuesdays);
         } else if (dayName == "Wednesday") {
-            console.log(wednesdays)
+            console.log(wednesdays);
         } else if (dayName == "Thursday") {
-            console.log(thursdays)
+            console.log(thursdays);
         } else if (dayName == "Friday") {
-            console.log(fridays)
+            console.log(fridays);
         }
         //console.log(parsedRegistry) // the whole array as JSON object
         if (chance > 0) {
-            return true
-
+            return true;
         } else {
-            return false
+            return false;
         }
     },
     storeChosenOnes(data) {
-        var checkThis = data
-        return data
-    },
-    sendJsonToVisualizer() {}
+        var checkThis = data;
+        return data;
+    }
 }
 
 
-module.exports = Locations
-=======
-var Locations = {
-  // find the name of the day
-  extractDay(message) {
-    var chosenDate;
-    //console.log('We received from Visualizer client choice: ' + message);
-    chosenDate = message;
-
-    var bytesString = String.fromCharCode(...chosenDate); // https://programmingwithswift.com/how-to-convert-byte-array-to-string-with-javascript/ EQUAL TO STRING
-    var splitUpString = bytesString.split("/");
-    var day = splitUpString[3];
-    //console.log(bytesString)
-    return day;
-  },
-  extractTime(message) {
-    var chosenDate;
-    console.log("We received from Visualizer client choice: " + message);
-    chosenDate = message;
-
-    var bytesString = String.fromCharCode(...chosenDate);
-    var splitUpString = bytesString.split("/");
-    var hour = splitUpString[4];
-    var minute = splitUpString[5];
-    return hour + minute;
-  },
-  extractDentistData(message) {
-    var parsed = JSON.parse(message); // when client clicks book in the marker
-    //console.log(parsed)
-    var id = parsed.dentistID;
-    var date = parsed.clientTime;
-    // the booking button will result in a payload that includes the dentist ID
-    //console.log(id + date)
-    return id + date;
-  },
-
-  extractDnetistCoordinates(message) {
-    var parsed = JSON.parse(message); // when client clicks book in the marker
-    var coordinates = parsed.clientCoordinates;
-    return coordinates;
-  },
-
-  entireCoordinates() {
-    var allCoordinates = new Array();
-    var countKey = Object.keys(jsonObject.dentists).length; // how many elements in the array
-    for (var m = 0; m < countKey; m++) {
-      allCoordinates[m] = jsonObject.dentists[m].coordinate; // save all coordinates
-    }
-    return allCoordinates;
-  },
-  validateTime(dayName, bookingTime) {
-    var countKey = Object.keys(jsonObject.dentists).length; // how many elements in the array
-    let mondays = new Array(); // create an empty array
-    let tuesdays = new Array();
-    let wednesdays = new Array();
-    let thursdays = new Array();
-    let fridays = new Array();
-    var chance = 0;
-    for (var m = 0; m < countKey; m++) {
-      mondays[m] = jsonObject.dentists[m].openinghours.monday; // save opeining hours
-      //console.log(mondays)
-      var splitUpString = mondays[m].split("-");
-      console.log(bookingTime);
-      console.log(splitUpString[0]);
-      if (
-        parseInt(splitUpString[0]) < bookingTime &&
-        parseInt(splitUpString[1]) > bookingTime
-      ) {
-        console.log("its valid time in one of the mondays at least"); // this allows us to save the date and time in the next function array
-        chance = 1;
-
-        //return true
-      } else {
-        console.log("its not valid");
-      }
-    }
-
-    for (var m = 0; m < countKey; m++) {
-      tuesdays[m] = jsonObject.dentists[m].openinghours.tuesday; // save opeining hours
-      //console.log(tuesday)
-      var splitUpString = tuesdays[m].split("-");
-      console.log(bookingTime);
-      console.log(splitUpString[0]);
-      if (
-        parseInt(splitUpString[0]) < bookingTime &&
-        parseInt(splitUpString[1]) > bookingTime
-      ) {
-        console.log("its valid time in one of the tuesdays at least"); // this allows us to save the date and time in the next function array
-        chance = 1;
-
-        //return true
-      } else {
-        console.log("its not valid");
-      }
-    }
-    for (var m = 0; m < countKey; m++) {
-      wednesdays[m] = jsonObject.dentists[m].openinghours.wednesday; // save opeining hours
-      //console.log(wednesday)
-      var splitUpString = wednesdays[m].split("-");
-      console.log(bookingTime);
-      console.log(splitUpString[0]);
-      if (
-        parseInt(splitUpString[0]) < bookingTime &&
-        parseInt(splitUpString[1]) > bookingTime
-      ) {
-        console.log("its valid time in one of the wednesdays at least"); // this allows us to save the date and time in the next function array
-        chance = 1;
-
-        //return true
-      } else {
-        console.log("its not valid");
-      }
-    }
-    for (var m = 0; m < countKey; m++) {
-      thursdays[m] = jsonObject.dentists[m].openinghours.thursday; // save opeining hours
-      //console.log(thursday)
-      var splitUpString = thursdays[m].split("-");
-      console.log(bookingTime);
-      console.log(splitUpString[0]);
-      if (
-        parseInt(splitUpString[0]) < bookingTime &&
-        parseInt(splitUpString[1]) > bookingTime
-      ) {
-        console.log("its valid time in one of the thursdays at least"); // this allows us to save the date and time in the next function array
-        chance = 1;
-
-        //return true
-      } else {
-        console.log("its not valid");
-      }
-    }
-    for (var m = 0; m < countKey; m++) {
-        fridays[m] = jsonObject.dentists[m].openinghours.friday; // save opeining hours
-         //console.log(friday)
-        var splitUpString = fridays[m].split("-");
-        console.log(bookingTime);
-        console.log(splitUpString[0]);
-        if (
-         parseInt(splitUpString[0]) < bookingTime &&
-         parseInt(splitUpString[1]) > bookingTime
-      ) {
-        console.log("its valid time in one of the fridays at least"); // this allows us to save the date and time in the next function array
-        chance = 1;
-
-        //return true
-      } else {
-        console.log("its not valid");
-      }
-    }
-    if (dayName == "Monday") {
-      // get the day from the extract data, or from data handler
-      console.log(mondays); // if monday is chosen by client we need to look at the items opening and closing hours for all mondays
-    } else if (dayName == "Tuesday") {
-      console.log(tuesdays);
-    } else if (dayName == "Wednesday") {
-      console.log(wednesdays);
-    } else if (dayName == "Thursday") {
-      console.log(thursdays);
-    } else if (dayName == "Friday") {
-      console.log(fridays);
-    }
-    //console.log(parsedRegistry) // the whole array as JSON object
-    if (chance > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  storeChosenOnes(data) {
-    var checkThis = data;
-    return data;
-  },
-  sendJsonToVisualizer() {},
-};
-
 module.exports = Locations;
->>>>>>> 7440a2470a5b22ff25418411a0f4545f6710531d
