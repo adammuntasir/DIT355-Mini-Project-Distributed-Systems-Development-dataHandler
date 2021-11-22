@@ -95,11 +95,35 @@ var Locations = {
         var minute = (splitUpString[5])
         return hour + minute
     },
+    extractUserId(message) {
+        var parsed = JSON.parse(message)
+        var userId = parsed.userId
+
+        return userId
+    },
+    extractRequestId(message) {
+        var parsed = JSON.parse(message)
+        var requestId = parsed.requestId
+
+        return requestId
+    },
+    hourMinute(message) {
+        var chosenDate;
+        console.log('We received from Visualizer client choice: ' + message);
+        chosenDate = message
+
+        var bytesString = String.fromCharCode(...chosenDate)
+        var splitUpString = bytesString.split('/');
+        var hour = (splitUpString[4])
+        var minute = (splitUpString[5])
+        console.log(hour + ":" + minute)
+        return hour + ":" + minute
+    },
     extractDentistData(message) {
         var parsed = JSON.parse(message) // when client clicks book in the marker
             //console.log(parsed)
         var id = parsed.dentistID
-        var date = parsed.clientTime
+        var date = parsed.date
         var dateWithoutQuotes = date.replace(/"/g, ''); // remove the quotes 
 
         // the booking button will result in a payload that includes the dentist ID 

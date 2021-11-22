@@ -7,7 +7,7 @@ var availableCoordinatesRed = new Array();
 var stringTaken = "0";
 var allCoordinates = Locations.entireCoordinates();
 var allJSON = Locations.sendWholeJson();
-
+var time
 
 subscriber.start(); //starts the subscriber.js module
 publisher.start(); //starts the publisher.js module
@@ -20,10 +20,12 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             var dayName = Locations.extractDay(payload)
             var timeChosen = Locations.extractTime(payload)
             var booleanValue = Locations.validateTime(dayName, timeChosen)
+            time = Locations.hourMinute(payload)
 
             if (booleanValue != true) {
                 console.log("no booking the time chosen is not valid by any dentist office")
-                publisher.publish("no booking the time chosen is not valid by any dentist office"); // the visualize will give booking response of rejection
+                publisher.publish(JSON.stringify({ time: "no booking the time chosen is not valid by any dentist office" }))
+
             } else {
                 // var coordinatesInString = JSON.stringify(allCoordinates)
                 // var withoutQuotes = coordinatesInString.replace(/"/g, '');
@@ -45,15 +47,27 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                     //console.log(takenCoordinatesRed)
                 stringTaken = JSON.stringify(takenCoordinatesRed)
 
+                var userId = Locations.extractUserId(payload)
+                var requestId = Locations.extractRequestId(payload)
+
                 // publisher.publish(stringTaken) DONT UNCOMMENT
-                publisher.publish(JSON.stringify({ status: "Its already taken" }))
+                publisher.publish(JSON.stringify({
+                    userId,
+                    requestId,
+                    time: "none"
+                }))
             } else {
                 console.log("the date is NOT taken")
 
                 indexChecker.push(takenDate)
                 console.log(indexChecker)
+                var userId = Locations.extractUserId(payload)
+                var requestId = Locations.extractRequestId(payload)
+
                 publisher.publish(JSON.stringify({
-                    status: "Confirmation"
+                    userId,
+                    requestId,
+                    time
                 }))
             }
 
