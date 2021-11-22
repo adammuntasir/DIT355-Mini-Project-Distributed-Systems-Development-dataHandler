@@ -8,6 +8,7 @@ var stringTaken = "0";
 var allCoordinates = Locations.entireCoordinates();
 var allJSON = Locations.sendWholeJson();
 var time
+var readyForBookingDate
 
 subscriber.start(); //starts the subscriber.js module
 publisher.start(); //starts the publisher.js module
@@ -21,6 +22,8 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             var timeChosen = Locations.extractTime(payload)
             var booleanValue = Locations.validateTime(dayName, timeChosen)
             time = Locations.hourMinute(payload)
+
+            readyForBookingDate = Locations.extractDateForBooking(payload)
 
             if (booleanValue != true) {
                 console.log("no booking the time chosen is not valid by any dentist office")
@@ -37,7 +40,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                 publisher.publish(wholeJson)
             }
         } else {
-            var dentistData = Locations.extractDentistData(payload) // booking payload load length is about 70
+            var dentistData = Locations.extractDentistData(payload, readyForBookingDate) // booking payload load length is about 70
             var takenDate = Locations.storeChosenOnes(dentistData)
                 //console.log(takenDate)
             if (indexChecker.includes(takenDate)) {
