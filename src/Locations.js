@@ -71,6 +71,20 @@ var Locations = {
     sendWholeJson() {
         return jsonObject;
     },
+    extractRetreiveTopic(message) {
+        var chosenDate;
+        //console.log('We received from Visualizer client choice: ' + message);
+        chosenDate = message
+
+        var bytesString = String.fromCharCode(...chosenDate) // https://programmingwithswift.com/how-to-convert-byte-array-to-string-with-javascript/ EQUAL TO STRING
+        var splitUpString = bytesString.split('/');
+        var year = (splitUpString[0])
+        var month = (splitUpString[1])
+        var day = (splitUpString[2])
+        var hour = (splitUpString[4])
+        var minute = (splitUpString[5])
+        return year + "-" + month + "-" + day + " " + hour + ":" + minute
+    },
 
     // find the name of the day
     extractDay(message) {
@@ -94,6 +108,21 @@ var Locations = {
         var hour = (splitUpString[4])
         var minute = (splitUpString[5])
         return hour + minute
+    },
+    extractDateForBooking(message) {
+        var chosenDate;
+        console.log('We received from Visualizer client choice: ' + message);
+        chosenDate = message
+
+        var bytesString = String.fromCharCode(...chosenDate)
+        var splitUpString = bytesString.split('/');
+        var year = (splitUpString[0])
+        var month = (splitUpString[1])
+        var day = (splitUpString[2])
+        var dayName = (splitUpString[3])
+        var hour = (splitUpString[4])
+        var minute = (splitUpString[5])
+        return year + month + day + dayName + hour + minute
     },
     extractUserId(message) {
         var parsed = JSON.parse(message)
@@ -119,20 +148,27 @@ var Locations = {
         console.log(hour + ":" + minute)
         return hour + ":" + minute
     },
-    extractDentistData(message) {
+    extractDentistData(message, dateFilledOut) {
         var parsed = JSON.parse(message) // when client clicks book in the marker
             //console.log(parsed)
-        var id = parsed.dentistID
-        var date = parsed.date
-        var dateWithoutQuotes = date.replace(/"/g, ''); // remove the quotes 
+            //var id = parsed.dentistID
+        var date = dateFilledOut
+            //console.log(dateFilledOut)
+            //var dateWithoutQuotes = date.replace(/"/g, ''); // remove the quotes 
 
         // the booking button will result in a payload that includes the dentist ID 
-        console.log(id + dateWithoutQuotes)
-        return id + dateWithoutQuotes
-    },
 
+        return date
+    },
+    extractClientTime(message) {
+        var parsed = JSON.parse(message) // when client clicks book in the marker
+
+        var date = parsed.date
+        return date;
+    },
     extractDnetistCoordinates(message) {
         var parsed = JSON.parse(message) // when client clicks book in the marker
+        console.log(parsed)
         var coordinates = parsed.clientCoordinates
         return coordinates;
     },
@@ -265,7 +301,6 @@ var Locations = {
         }
     },
     storeChosenOnes(data) {
-        var checkThis = data;
         return data;
     }
 }
