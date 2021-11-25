@@ -49,12 +49,10 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                 for (var i = 0; i < arrayOfMaps.length; i++) {
                     arrayOfMaps[i].forEach(function(value, key) { // get all values in the array 
 
-                        if (key = extractRetreiveTopic) { // each time we check for the topic from visualizer 
+                        if (key == extractRetreiveTopic) { // each time we check for the topic from visualizer 
                             takenCoordinatesRed.push(value) // we will send the pure coordinate values to Visualizers each time 
                         } else {
-                            takenCoordinatesRed = new Map([
-                                ["2022-6-15 12:00", [22.942625, 33.685255]] // reset the takenCoordinates to filled out map for a distant location ( so that we dont send an empty object to visualizer)
-                            ]);
+                            takenCoordinatesRed = new Array()
                         }
                     })
                 }
