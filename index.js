@@ -51,8 +51,6 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
 
                         if (key == extractRetreiveTopic) { // each time we check for the topic from visualizer 
                             takenCoordinatesRed.push(value) // we will send the pure coordinate values to Visualizers each time 
-                        } else {
-                            takenCoordinatesRed = new Array()
                         }
                     })
                 }
