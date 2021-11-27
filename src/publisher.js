@@ -38,8 +38,6 @@ var publisher = {
 
     publish: function publishing(message) {
         var topic = access.sendToExtractData;
-
-
         client.publish(topic, message);
 
     }

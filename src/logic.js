@@ -14,6 +14,20 @@ let jsonObject = {
                 "thursday": "900-1700",
                 "friday": "900-1500"
             },
+            "LunchTimes": {
+                "monday": "1200-1300",
+                "tuesday": "1200-1300",
+                "wednesday": "1200-1300",
+                "thursday": "1200-1300",
+                "friday": "1200-1300",
+            },
+            "FikaTimes": {
+                "monday": "1500-1530",
+                "tuesday": "1500-1530",
+                "wednesday": "1500-1530",
+                "thursday": "1500-1530",
+                "friday": "1500-1530",
+            }
         },
         {
             "id": 2,
@@ -30,6 +44,20 @@ let jsonObject = {
                 "thursday": "700-1900",
                 "friday": "700-1900"
             },
+            "LunchTimes": {
+                "monday": "1200-1300",
+                "tuesday": "1200-1300",
+                "wednesday": "1200-1300",
+                "thursday": "1200-1300",
+                "friday": "1200-1300",
+            },
+            "FikaTimes": {
+                "monday": "1500-1530",
+                "tuesday": "1500-1530",
+                "wednesday": "1500-1530",
+                "thursday": "1500-1530",
+                "friday": "1500-1530",
+            }
         },
         {
             "id": 3,
@@ -46,6 +74,20 @@ let jsonObject = {
                 "thursday": "700-1700",
                 "friday": "800-1600"
             },
+            "LunchTimes": {
+                "monday": "1200-1300",
+                "tuesday": "1200-1300",
+                "wednesday": "1200-1300",
+                "thursday": "1200-1300",
+                "friday": "1200-1300",
+            },
+            "FikaTimes": {
+                "monday": "1500-1530",
+                "tuesday": "1500-1530",
+                "wednesday": "1500-1530",
+                "thursday": "1500-1530",
+                "friday": "1500-1530",
+            }
         },
         {
             "id": 4,
@@ -62,6 +104,20 @@ let jsonObject = {
                 "thursday": "1000-1800",
                 "friday": "1000-1800"
             },
+            "LunchTimes": {
+                "monday": "1200-1300",
+                "tuesday": "1200-1300",
+                "wednesday": "1200-1300",
+                "thursday": "1200-1300",
+                "friday": "1200-1300",
+            },
+            "FikaTimes": {
+                "monday": "1500-1530",
+                "tuesday": "1500-1530",
+                "wednesday": "1500-1530",
+                "thursday": "1500-1530",
+                "friday": "1500-1530",
+            }
         }
     ]
 }
@@ -189,16 +245,38 @@ var logic = {
         let wednesdays = new Array();
         let thursdays = new Array();
         let fridays = new Array();
+
+        mondaysLunchTimes = new Array();
+        tuesdaysLunchTimes = new Array();
+        wednesdaysLunchTimes = new Array();
+        thursdaysLunchTimes = new Array();
+        fridaysLunchTimes = new Array();
+
+        mondaysFikaTimes = new Array();
+        tuesdaysFikaTimes = new Array();
+        wednesdaysFikaTimes = new Array();
+        thursdaysFikaTimes = new Array();
+        fridaysFikaTimes = new Array();
+
         var chance = 0;
         for (var m = 0; m < countKey; m++) {
             mondays[m] = jsonObject.dentists[m].openinghours.monday; // save opeining hours
+            mondaysLunchTimes[m] = jsonObject.dentists[m].LunchTimes.monday; // save Lunch hours
+            mondaysFikaTimes[m] = jsonObject.dentists[m].FikaTimes.monday; // save Lunch hours
+
             //console.log(mondays)
             var splitUpString = mondays[m].split("-");
-            console.log(bookingTime);
-            console.log(splitUpString[0]);
+            var splitUpStringLunch = mondaysLunchTimes[m].split("-");
+            var splitUpStringFika = mondaysFikaTimes[m].split("-");
+
             if (
-                parseInt(splitUpString[0]) < bookingTime &&
-                parseInt(splitUpString[1]) > bookingTime
+                (parseInt(splitUpString[0]) < bookingTime &&
+                    parseInt(splitUpString[1]) > bookingTime) &&
+                (
+                    ((parseInt(splitUpStringLunch[0]) > bookingTime || parseInt(splitUpStringLunch[1]) < bookingTime))
+                ) &&
+
+                (parseInt(splitUpStringFika[0]) > bookingTime || parseInt(splitUpStringFika[1]) < bookingTime)
             ) {
                 console.log("its valid time in one of the mondays at least"); // this allows us to save the date and time in the next function array
                 chance = 1;
@@ -211,13 +289,21 @@ var logic = {
 
         for (var m = 0; m < countKey; m++) {
             tuesdays[m] = jsonObject.dentists[m].openinghours.tuesday; // save opeining hours
-            //console.log(tuesday)
+            tuesdaysLunchTimes[m] = jsonObject.dentists[m].LunchTimes.tuesday; // save Lunch hours
+            tuesdaysFikaTimes[m] = jsonObject.dentists[m].FikaTimes.tuesday; // save Lunch hours
+
+            //console.log(mondays)
             var splitUpString = tuesdays[m].split("-");
-            console.log(bookingTime);
-            console.log(splitUpString[0]);
+            var splitUpStringLunch = tuesdaysLunchTimes[m].split("-");
+            var splitUpStringFika = tuesdaysFikaTimes[m].split("-");
+            console.log(splitUpStringLunch)
             if (
-                parseInt(splitUpString[0]) < bookingTime &&
-                parseInt(splitUpString[1]) > bookingTime
+                (parseInt(splitUpString[0]) < bookingTime &&
+                    parseInt(splitUpString[1]) > bookingTime) &&
+                (parseInt(splitUpStringLunch[0]) >= bookingTime &&
+                    parseInt(splitUpStringLunch[1]) <= bookingTime) &&
+                (parseInt(splitUpStringFika[0]) >= bookingTime &&
+                    parseInt(splitUpStringFika[1]) <= bookingTime)
             ) {
                 console.log("its valid time in one of the tuesdays at least"); // this allows us to save the date and time in the next function array
                 chance = 1;
@@ -229,15 +315,25 @@ var logic = {
         }
         for (var m = 0; m < countKey; m++) {
             wednesdays[m] = jsonObject.dentists[m].openinghours.wednesday; // save opeining hours
-            //console.log(wednesday)
+            wednesdaysLunchTimes[m] = jsonObject.dentists[m].LunchTimes.wednesday; // save Lunch hours
+            wednesdaysFikaTimes[m] = jsonObject.dentists[m].FikaTimes.wednesday; // save Lunch hours
+
+            //console.log(mondays)
             var splitUpString = wednesdays[m].split("-");
-            console.log(bookingTime);
-            console.log(splitUpString[0]);
+            var splitUpStringLunch = wednesdaysLunchTimes[m].split("-");
+            var splitUpStringFika = wednesdaysFikaTimes[m].split("-");
+            console.log(splitUpStringLunch)
+
             if (
-                parseInt(splitUpString[0]) < bookingTime &&
-                parseInt(splitUpString[1]) > bookingTime
+                (parseInt(splitUpString[0]) < bookingTime &&
+                    parseInt(splitUpString[1]) > bookingTime) &&
+                (
+                    ((parseInt(splitUpStringLunch[0]) > bookingTime || parseInt(splitUpStringLunch[1]) < bookingTime))
+                ) &&
+
+                (parseInt(splitUpStringFika[0]) > bookingTime || parseInt(splitUpStringFika[1]) < bookingTime)
             ) {
-                console.log("its valid time in one of the wednesdays at least"); // this allows us to save the date and time in the next function array
+                console.log("its valid time in one of the mondays at least"); // this allows us to save the date and time in the next function array
                 chance = 1;
 
                 //return true
@@ -247,15 +343,25 @@ var logic = {
         }
         for (var m = 0; m < countKey; m++) {
             thursdays[m] = jsonObject.dentists[m].openinghours.thursday; // save opeining hours
-            //console.log(thursday)
+            thursdaysLunchTimes[m] = jsonObject.dentists[m].LunchTimes.thursday; // save Lunch hours
+            thursdaysFikaTimes[m] = jsonObject.dentists[m].FikaTimes.thursday; // save Lunch hours
+
+            //console.log(mondays)
             var splitUpString = thursdays[m].split("-");
-            console.log(bookingTime);
-            console.log(splitUpString[0]);
+            var splitUpStringLunch = thursdaysLunchTimes[m].split("-");
+            var splitUpStringFika = thursdaysFikaTimes[m].split("-");
+            console.log(splitUpStringLunch)
+
             if (
-                parseInt(splitUpString[0]) < bookingTime &&
-                parseInt(splitUpString[1]) > bookingTime
+                (parseInt(splitUpString[0]) < bookingTime &&
+                    parseInt(splitUpString[1]) > bookingTime) &&
+                (
+                    ((parseInt(splitUpStringLunch[0]) > bookingTime || parseInt(splitUpStringLunch[1]) < bookingTime))
+                ) &&
+
+                (parseInt(splitUpStringFika[0]) > bookingTime || parseInt(splitUpStringFika[1]) < bookingTime)
             ) {
-                console.log("its valid time in one of the thursdays at least"); // this allows us to save the date and time in the next function array
+                console.log("its valid time in one of the mondays at least"); // this allows us to save the date and time in the next function array
                 chance = 1;
 
                 //return true
@@ -265,15 +371,25 @@ var logic = {
         }
         for (var m = 0; m < countKey; m++) {
             fridays[m] = jsonObject.dentists[m].openinghours.friday; // save opeining hours
-            //console.log(friday)
+            fridaysLunchTimes[m] = jsonObject.dentists[m].LunchTimes.friday; // save Lunch hours
+            fridaysFikaTimes[m] = jsonObject.dentists[m].FikaTimes.friday; // save Lunch hours
+
+            //console.log(mondays)
             var splitUpString = fridays[m].split("-");
-            console.log(bookingTime);
-            console.log(splitUpString[0]);
+            var splitUpStringLunch = fridaysLunchTimes[m].split("-");
+            var splitUpStringFika = fridaysFikaTimes[m].split("-");
+            console.log(splitUpStringLunch)
+
             if (
-                parseInt(splitUpString[0]) < bookingTime &&
-                parseInt(splitUpString[1]) > bookingTime
+                (parseInt(splitUpString[0]) < bookingTime &&
+                    parseInt(splitUpString[1]) > bookingTime) &&
+                (
+                    ((parseInt(splitUpStringLunch[0]) > bookingTime || parseInt(splitUpStringLunch[1]) < bookingTime))
+                ) &&
+
+                (parseInt(splitUpStringFika[0]) > bookingTime || parseInt(splitUpStringFika[1]) < bookingTime)
             ) {
-                console.log("its valid time in one of the fridays at least"); // this allows us to save the date and time in the next function array
+                console.log("its valid time in one of the mondays at least"); // this allows us to save the date and time in the next function array
                 chance = 1;
 
                 //return true
