@@ -109,7 +109,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             var dentistData = Locations.extractDentistData(payload, readyForBookingDate) // booking payload load length is about 70
             var takenDate = Locations.storeChosenOnes(dentistData)
                 //console.log(takenDate)
-            if (indexChecker.includes(takenDate)) {
+            if (indexChecker.includes(takenDate)) { // MUST INCLUDE THE USERID
                 console.log("the date is taken")
 
                 /*
@@ -127,7 +127,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                     requestId,
                     time: "none"
                 }))
-            } else {
+            } else if (!indexChecker.includes(takenDate)) {
                 console.log("the date is NOT taken")
 
                 indexChecker.push(takenDate)
@@ -140,6 +140,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                     requestId,
                     time
                 }))
+
 
                 // if a booking happens this block will be invoked 
                 // it will save the coordinate to a spefic time key 
@@ -251,11 +252,12 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
                     //console.log(allCoordinates)
 
                 //var withoutQuotes = coordinatesInString.replace(/"/g, '');
-                //wihtoutQuotesString = JSON.stringify(withoutQuotes)
+                wihtoutQuotesString = JSON.stringify(allCordinatesParsed)
 
                 console.log(allCordinatesParsed)
                     //console.log(coordinatesInString)
-                    // publisher.publish(wihtoutQuotesString)
+                publisher.publish(wihtoutQuotesString)
+
 
             }
         }
