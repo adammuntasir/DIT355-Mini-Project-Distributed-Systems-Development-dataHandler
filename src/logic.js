@@ -66,7 +66,7 @@ let jsonObject = {
     ]
 }
 
-var Locations = {
+var logic = {
 
     sendWholeJson() {
         return jsonObject;
@@ -151,14 +151,14 @@ var Locations = {
     extractDentistData(message, dateFilledOut) {
         var parsed = JSON.parse(message) // when client clicks book in the marker
             //console.log(parsed)
-        var id = parsed.dentistID
+            //var id = parsed.dentistID
         var date = dateFilledOut
             //console.log(dateFilledOut)
             //var dateWithoutQuotes = date.replace(/"/g, ''); // remove the quotes 
 
         // the booking button will result in a payload that includes the dentist ID 
 
-        return id + date
+        return date
     },
     extractClientTime(message) {
         var parsed = JSON.parse(message) // when client clicks book in the marker
@@ -166,7 +166,7 @@ var Locations = {
         var date = parsed.date
         return date;
     },
-    extractDentistCoordinates(message) {
+    extractDnetistCoordinates(message) {
         var parsed = JSON.parse(message) // when client clicks book in the marker
         console.log(parsed)
         var coordinates = parsed.clientCoordinates
@@ -306,4 +306,4 @@ var Locations = {
 }
 
 
-module.exports = Locations;
+module.exports = logic;
