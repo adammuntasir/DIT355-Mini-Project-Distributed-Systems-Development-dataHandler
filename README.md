@@ -16,7 +16,9 @@ The main purpose of the time validator repository is to validate if the time slo
 2. Move the registry file from the documentation to the parent
 3. To set up the TimeValidator repository we use "npm i mqtt" command
 
-
-
 ### Running
    To run this node we use "node index" command
+
+### Link to the main Team-8 documentation ReadMe file  
+
+https://git.chalmers.se/courses/dit355/test-teams-formation/team-8/team-8-project/-/blob/main/README.md
