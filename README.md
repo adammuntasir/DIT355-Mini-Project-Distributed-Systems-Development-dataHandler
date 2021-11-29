@@ -12,7 +12,7 @@ The main purpose of the time validator repository is to validate if the time slo
 2. Git (https://git-scm.com/downloads)
 
 ### Setup
-1. Move the file Global_Keys in the Documentations folder to the parent directory
+1. Move the file Global_values in the Documentations folder to the parent directory
 2. Move the registry file from the documentation to the parent
 3. To set up the TimeValidator repository we use "npm i mqtt" command
 
