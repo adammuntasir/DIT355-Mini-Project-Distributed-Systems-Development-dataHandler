@@ -37,9 +37,7 @@ var publisher = {
     },
 
     publish: function publishing(message) {
-        var topic = access.sendToClient;
-
-
+        var topic = access.sendToExtractData;
         client.publish(topic, message);
 
     }

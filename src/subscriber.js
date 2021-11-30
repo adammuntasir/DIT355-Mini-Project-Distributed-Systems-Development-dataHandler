@@ -49,7 +49,7 @@ var subscriber = {
 }
 
 function startSubscription() {
-    client.subscribe(access.toRegistry);
+    client.subscribe(access.sendToDataHandler);
 }
 
 module.exports = subscriber
