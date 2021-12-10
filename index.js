@@ -12,7 +12,7 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
     try {
         console.log(payload.length)
             // The if works when we subscribe to a specific time 
-        if (payload.length < 50) { // date payload length is a maximum of 27
+        if (payload.length < 50 && payload.length > 10) { // date payload length is a maximum of 27
             var dayName = logic.extractDay(payload)
             var timeChosen = logic.extractTime(payload)
             var booleanValue = logic.validateTime(dayName, timeChosen)
