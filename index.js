@@ -19,17 +19,20 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             time = logic.hourMinute(payload)
             console.log(booleanValue)
             if (booleanValue != true) {
-                console.log("no booking the time chosen is not valid by any dentist office")
+                console.log("no booking because the time chosen is not valid by any clinic")
                 okToSend = 0;
+                publisher.publish(JSON.stringify({ time: "Not Open" }))
+
             } else {
                 okToSend = 1
                 publisher.publish(payload)
             }
-        }
-        if (okToSend == 1) {
-            publisher.publish(payload) // the problem is that when its false it will send the ok to the booking 
-        } else {
-            publisher.publish(JSON.stringify({ Fika: "Lunch and Fika times chosen, clinic is closed" }))
+        } else { // receive from circuit breaker length is 15
+            var bytesString = String.fromCharCode(...payload)
+
+            console.log(bytesString)
+            publisher.publish(payload)
+
         }
 
     } catch (error) {
