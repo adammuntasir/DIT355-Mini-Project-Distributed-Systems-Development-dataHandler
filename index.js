@@ -15,17 +15,21 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
         if (payload.length < 50 && payload.length > 10) { // date payload length is a maximum of 27
             var dayName = logic.extractDay(payload)
             var timeChosen = logic.extractTime(payload)
-            var booleanValue = logic.validateTime(dayName, timeChosen)
-            time = logic.hourMinute(payload)
-            console.log(booleanValue)
-            if (booleanValue != true) {
-                console.log("no booking because the time chosen is not valid by any clinic")
-                okToSend = 0;
+            if (logic.extractWeekends(payload) == "Saturday" || logic.extractWeekends(payload) == "Sunday") {
                 publisher.publish(JSON.stringify({ time: "Not Open" }))
-
             } else {
-                okToSend = 1
-                publisher.publish(payload)
+                var booleanValue = logic.validateTime(dayName, timeChosen)
+                time = logic.hourMinute(payload)
+                console.log(booleanValue)
+                if (booleanValue != true) {
+                    console.log("no booking because the time chosen is not valid by any clinic")
+                    okToSend = 0;
+                    publisher.publish(JSON.stringify({ time: "Not Open" }))
+
+                } else {
+                    okToSend = 1
+                    publisher.publish(payload)
+                }
             }
         } else { // receive from circuit breaker length is 15
             var bytesString = String.fromCharCode(...payload)
