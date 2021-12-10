@@ -9,13 +9,14 @@ subscriber.start(); //starts the subscriber.js module
 publisher.start(); //starts the publisher.js module
 
 subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
+    console.log(payload)
     try {
         console.log(payload.length)
             // The if works when we subscribe to a specific time 
         if (payload.length < 50 && payload.length > 10) { // date payload length is a maximum of 27
             var dayName = logic.extractDay(payload)
             var timeChosen = logic.extractTime(payload)
-            if (logic.extractWeekends(payload) == "Saturday" || logic.extractWeekends(payload) == "Sunday") {
+            if (logic.extractDay(payload) == "Saturday" || logic.extractDay(payload) == "Sunday") {
                 publisher.publish(JSON.stringify({ time: "Not Open" }))
             } else {
                 var booleanValue = logic.validateTime(dayName, timeChosen)
