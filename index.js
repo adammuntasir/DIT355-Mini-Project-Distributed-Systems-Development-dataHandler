@@ -20,16 +20,22 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             console.log(booleanValue)
             if (dayName == "Saturday" || dayName == "Sunday") {
                 publisher.publish(JSON.stringify({ time: "Not Open" }))
+                booleanValue = false
+                okToSend = 0;
+
             }
             if (booleanValue != true) {
                 console.log("no booking because the time chosen is not valid by any clinic")
                 okToSend = 0;
                 publisher.publish(JSON.stringify({ time: "Not Open" }))
 
-            } else {
-                okToSend = 1
-                publisher.publish(payload)
             }
+            if (booleanValue == true) {
+                okToSend = 1
+            }
+            if (okToSend == 1)
+                publisher.publish(payload)
+
         } else { // receive from circuit breaker length is 15
             var bytesString = String.fromCharCode(...payload)
 
