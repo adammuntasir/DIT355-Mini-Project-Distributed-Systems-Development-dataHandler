@@ -18,6 +18,9 @@ subscriber.eventListener.on("mqttRecieved", function(topic, payload) {
             var booleanValue = logic.validateTime(dayName, timeChosen)
             time = logic.hourMinute(payload)
             console.log(booleanValue)
+            if (dayName == "Saturday" || dayName == "Sunday") {
+                publisher.publish(JSON.stringify({ time: "Not Open" }))
+            }
             if (booleanValue != true) {
                 console.log("no booking because the time chosen is not valid by any clinic")
                 okToSend = 0;
