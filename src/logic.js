@@ -28,6 +28,15 @@ var logic = {
         var minute = (splitUpString[5])
         return hour + minute
     },
+    extractWeekends(message) {
+        var chosenDate;
+        chosenDate = message
+
+        var bytesString = String.fromCharCode(...chosenDate)
+        var splitUpString = bytesString.split('/');
+        var nameOfWeek = (splitUpString[3])
+        return nameOfWeek
+    },
     hourMinute(message) {
         var chosenDate;
         console.log('We received from Visualizer client choice: ' + message);

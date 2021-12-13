@@ -1,7 +1,7 @@
 //Reference: https://www.npmjs.com/package/mqtt
 
 var mqtt = require('mqtt');
-var options = { qos: 1, keepalive: 0, reconnectPeriod: 5000 };
+var options = { qos: 1, keepalive: 100, reconnectPeriod: 50000 };
 var access = require('../../global_values')
 ip = access.ip_address;
 port = access.tcp_port;
